@@ -22,9 +22,9 @@ jobs:
 
     - name: Authenticate Service Account
       run: |
-        echo '${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}' > /tmp/key.json
-        jq . /tmp/key.json > /dev/null || (echo "Invalid JSON format" && cat /tmp/key.json && exit 1)
+        echo "${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}" | base64 -d > /tmp/key.json
         gcloud auth activate-service-account --key-file=/tmp/key.json
+    
 
     - name: Configure GCP Project and Region
       run: |
