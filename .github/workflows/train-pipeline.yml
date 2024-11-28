@@ -27,10 +27,15 @@ jobs:
         gcloud config set project ${{ secrets.GCP_PROJECT }}
         gcloud config set run/region us-central1
 
+    - name: Authenticate Service Account for gsutil
+      run: |
+        echo ${{ secrets.GCP_SERVICE_ACCOUNT_KEY }} > /tmp/key.json
+        gcloud auth activate-service-account --key-file=/tmp/key.json
+
     - name: Fetch Latest Dataset
       run: |
         mkdir -p data/raw
-        gsutil cp gs://loanapprovalprediction/data/raw/LoanApprovalPrediction.csv data/raw/LoanApprovalPrediction.csv
+        gsutil -o "Credentials:gs_service_key_file=/tmp/key.json" cp gs://loanapprovalprediction/data/raw/LoanApprovalPrediction.csv data/raw/LoanApprovalPrediction.csv
 
     - name: Build Docker Image
       run: |
