@@ -22,7 +22,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 
 # Set Google Cloud credentials
-COPY loanapprovalprediction-442813-e247e945a33a.json /app/gcs-key.json
+COPY loanapprovalprediction-442813-de39e566af07.json /app/gcs-key.json
 ENV GOOGLE_APPLICATION_CREDENTIALS=/app/gcs-key.json
 
 # Expose the default Gradio port

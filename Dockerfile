@@ -24,7 +24,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 
 # Copy Google Cloud service account key
-COPY loanapprovalprediction-442813-e247e945a33a.json /app/gcs-key.json
+COPY loanapprovalprediction-442813-de39e566af07.json /app/gcs-key.json
 
 # Set the Google Cloud credentials environment variable
 ENV GOOGLE_APPLICATION_CREDENTIALS=/app/gcs-key.json
