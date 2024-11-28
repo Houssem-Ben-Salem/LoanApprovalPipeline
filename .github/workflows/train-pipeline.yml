@@ -20,16 +20,13 @@ jobs:
     - name: Install jq (JSON Validator)
       run: sudo apt-get update && sudo apt-get install -y jq
 
-    - name: Authenticate Service Account for gsutil
+    - name: Write Service Account Key to File
       run: |
-        # Write the service account key to a file
         echo "${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}" > /tmp/key-raw.json
+        jq . /tmp/key-raw.json > /tmp/key.json || (echo "Invalid JSON format" && cat /tmp/key-raw.json && exit 1)
 
-        # Replace escaped newlines with actual newlines and validate the JSON
-        sed 's/\\\\n/\\n/g' /tmp/key-raw.json | jq . > /tmp/key.json
-
-        # Activate the service account
-        gcloud auth activate-service-account --key-file=/tmp/key.json
+    - name: Authenticate Service Account
+      run: gcloud auth activate-service-account --key-file=/tmp/key.json
 
     - name: Configure GCP Project and Region
       run: |
@@ -39,7 +36,7 @@ jobs:
     - name: Fetch Latest Dataset
       run: |
         mkdir -p data/raw
-        gsutil -o "Credentials:gs_service_key_file=/tmp/key.json" cp gs://loanapprovalprediction/data/raw/LoanApprovalPrediction.csv data/raw/LoanApprovalPrediction.csv
+        gsutil cp gs://loanapprovalprediction/data/raw/LoanApprovalPrediction.csv data/raw/LoanApprovalPrediction.csv
 
     - name: Build Docker Image
       run: |
