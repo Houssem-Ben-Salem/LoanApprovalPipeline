@@ -7,8 +7,10 @@ WORKDIR /app
 # Set the PYTHONPATH to include the current directory
 ENV PYTHONPATH=/app
 
-# Install system dependencies
-RUN apt-get update && apt-get install -y --no-install-recommends gcc libgomp1 && \
+# Install system dependencies for XGBoost and CatBoost
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    gcc \
+    libgomp1 && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
@@ -21,8 +23,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy the application files into the container
 COPY . .
 
-# Set Google Cloud credentials
-COPY loanapprovalprediction-442813-de39e566af07.json /app/gcs-key.json
+# Set Google Cloud credentials environment variable (key injected at runtime)
 ENV GOOGLE_APPLICATION_CREDENTIALS=/app/gcs-key.json
 
 # Expose the default Gradio port
