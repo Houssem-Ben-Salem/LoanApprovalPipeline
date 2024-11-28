@@ -22,9 +22,13 @@ jobs:
 
     - name: Authenticate Service Account for gsutil
       run: |
-        echo "${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}" > /tmp/key.json
-        cat /tmp/key.json | jq . > /tmp/key-validated.json || (cat /tmp/key.json && exit 1)
-        mv /tmp/key-validated.json /tmp/key.json
+        # Write the service account key to a file
+        echo "${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}" > /tmp/key-raw.json
+
+        # Replace escaped newlines with actual newlines and validate the JSON
+        sed 's/\\\\n/\\n/g' /tmp/key-raw.json | jq . > /tmp/key.json
+
+        # Activate the service account
         gcloud auth activate-service-account --key-file=/tmp/key.json
 
     - name: Configure GCP Project and Region
