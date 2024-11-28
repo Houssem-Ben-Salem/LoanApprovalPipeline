@@ -30,6 +30,14 @@ jobs:
         gcloud config set project ${{ secrets.GCP_PROJECT }}
         gcloud config set run/region us-central1
 
+    - name: Enable Required Google Cloud APIs
+      run: |
+        gcloud services enable \
+          artifactregistry.googleapis.com \
+          run.googleapis.com \
+          cloudresourcemanager.googleapis.com \
+          iam.googleapis.com
+
     - name: Fetch Latest Dataset
       run: |
         mkdir -p data/raw
@@ -41,11 +49,13 @@ jobs:
 
     - name: Push Docker Image to Artifact Registry
       run: |
+        gcloud auth configure-docker us-central1-docker.pkg.dev
         docker push us-central1-docker.pkg.dev/${{ secrets.GCP_PROJECT }}/loan-approval-repo/loan-approval-pipeline:${{ github.sha }}
 
     - name: Deploy to Google Cloud Run
       run: |
         gcloud run deploy loan-approval-pipeline \
           --image us-central1-docker.pkg.dev/${{ secrets.GCP_PROJECT }}/loan-approval-repo/loan-approval-pipeline:${{ github.sha }} \
+          --region us-central1 \
           --platform managed \
           --allow-unauthenticated
