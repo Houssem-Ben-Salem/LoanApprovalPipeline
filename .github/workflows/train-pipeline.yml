@@ -29,7 +29,7 @@ jobs:
 
     - name: Authenticate Service Account for gsutil
       run: |
-        echo "${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}" > /tmp/key.json
+        printf "%s" "${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}" > /tmp/key.json
         gcloud auth activate-service-account --key-file=/tmp/key.json
 
     - name: Fetch Latest Dataset
