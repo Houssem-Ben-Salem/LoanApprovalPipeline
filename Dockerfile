@@ -23,10 +23,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy the project files into the container
 COPY . .
 
-# Copy Google Cloud service account key
-COPY loanapprovalprediction-442813-de39e566af07.json /app/gcs-key.json
-
-# Set the Google Cloud credentials environment variable
+# Set Google Cloud credentials environment variable (key injected at runtime)
 ENV GOOGLE_APPLICATION_CREDENTIALS=/app/gcs-key.json
 
 # Expose the default Cloud Run port
