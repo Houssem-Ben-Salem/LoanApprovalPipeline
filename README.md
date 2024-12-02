@@ -29,8 +29,6 @@ This repository implements an end-to-end *MLOps pipeline* for a *Loan Approval P
 ---
 
 ## 🛠️ Project Structure
-
-plaintext
 ├── app/                           # Inference-related files
 │   ├── gradio_inference.py        # Gradio-based inference app
 │   ├── Dockerfile                 # Dockerfile for the inference service
@@ -54,8 +52,8 @@ plaintext
 
 1. *Clone the Repository*:
    
-   git clone https://github.com/your-username/loan-approval-mlops.git
-   cd loan-approval-mlops
+   git clone https://github.com/yassineboumaiza/LoanApprovalPipeline.git
+   cd LoanApprovalPipeline
    
 
 2. *Set Up Python Environment*:
