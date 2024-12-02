@@ -28,26 +28,6 @@ This repository implements an end-to-end *MLOps pipeline* for a *Loan Approval P
 
 ---
 
-## 🛠️ Project Structure
-├── app/                           # Inference-related files
-│   ├── gradio_inference.py        # Gradio-based inference app
-│   ├── Dockerfile                 # Dockerfile for the inference service
-│   └── requirements.txt           # Python dependencies for inference
-├── src/                           # Training pipeline and utilities
-│   ├── pipeline/                  # Training and evaluation scripts
-│   │   ├── run_pipeline.py        # Main entry point for the training pipeline
-│   │   ├── train_model.py         # Model training logic
-│   │   └── evaluate_model.py      # Model evaluation logic
-│   └── utils/                     # Utility functions
-├── data/                          # Placeholder for datasets
-│   └── raw/                       # Raw data downloaded from GCS
-├── Dockerfile                     # Dockerfile for the training pipeline
-├── train-pipeline.yml             # GitHub Actions CI/CD workflow
-├── README.md                      # Project documentation
-└── loanapprovalprediction-442813-de39e566af07.json  # GCP service account key (secured)
-
----
-
 ## 📦 Installation
 
 1. *Clone the Repository*:
